@@ -23,34 +23,48 @@ const createSquare = () => {
   return square;
 };
 
-// Create div rows, columns.
-const createGrid = () => {
-  // Set the grid styles to a grid layout
+// Append the square to the grid
+const addSquareToGrid = (square) => {
+  grid.appendChild(square);
+};
+
+// Set the grid styles to a grid layout
+const setGridStyles = (size) => {
   grid.style.display = 'grid';
   grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
   grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+};
 
-  // Initialize the slider
-  const slider = document.getElementById('myRange');
-  const output = document.getElementById('outputValue');
-  output.innerHTML = size;
+// Create the initial grid
+const createGrid = (size) => {
+  clearGrid();
+  setGridStyles(size);
+  const numSquares = calculateNumSquares(size);
+  for (let i = 0; i < numSquares; i++) {
+    const square = createSquare();
+    addSquareToGrid(square);
+  }
+};
 
-  // Handle the slider input event
-  slider.oninput = function () {
-    const newSize = this.value;
-    output.innerHTML = newSize;
+// Initialize the slider
+const slider = document.getElementById('myRange');
+const output = document.getElementById('outputValue');
+output.innerHTML = size;
 
-    // Set the size of the squares between 1px and 64px
-    const squareSize = Math.min(64, Math.max(1, Math.floor(400 / newSize))) + 'px';
+// Handle the slider input event
+slider.oninput = function () {
+  const newSize = this.value;
+  output.innerHTML = newSize;
 
-    // Set the new grid styles with the updated size and square size
-    grid.style.gridTemplateColumns = `repeat(${newSize}, ${squareSize})`;
-    grid.style.gridTemplateRows = `repeat(${newSize}, ${squareSize})`;
+  // Set the size of the squares between 1px and 64px
+  const squareSize = Math.min(64, Math.max(1, Math.floor(400 / size))) + 'px';
 
-    // Create the new grid with the updated size of each adjustments slider
-    createGrid(newSize);
-  };
+  // Set the new grid styles with the updated size and square size
+  setGridStyles(size);
+
+  // Create the new grid with the updated size of each adjustments slider
+  createGrid(size);
 };
 
 // Call the function to create the initial grid
-createGrid();
+createGrid(size);
