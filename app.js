@@ -52,9 +52,9 @@ const output = document.getElementById('outputValue');
 output.innerHTML = size;
 
 // Handle the slider input event
-slider.oninput = function () {
-  const newSize = this.value;
-  output.innerHTML = newSize;
+slider.addEventListener('input', (e) => {
+  size = e.target.value;
+  output.innerHTML = size;
 
   // Set the size of the squares between 1px and 64px
   const squareSize = Math.min(64, Math.max(1, Math.floor(400 / size))) + 'px';
@@ -64,7 +64,7 @@ slider.oninput = function () {
 
   // Create the new grid with the updated size of each adjustments slider
   createGrid(size);
-};
+});
 
 // Call the function to create the initial grid
 createGrid(size);
