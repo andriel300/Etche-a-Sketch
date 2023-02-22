@@ -1,19 +1,25 @@
 #container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid #ccc;
-  background-color: darkred;
-  border-radius: 4rem;
+  display: grid;
+  grid-template-columns: repeat(16, 40px);
+  grid-template-rows: repeat(16, 40px);
+  gap: 1px;
+  margin: 0 auto;
+  max-width: 960px;
+  margin-top: 20px;
 }
 
 .square {
-  width: 40px;
-  height: 40px;
   background-color: #fff;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 .square:hover {
   background-color: #888;
+}
+
+#reset {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
 }

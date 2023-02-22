@@ -1,8 +1,10 @@
-document.addEventListener('DOMContentLoaded', function () {
-  // Get the container div
-  const container = document.getElementById('container');
+// Get the container div
+const container = document.querySelector('#container');
+const resetButton = document.querySelector('#reset');
 
-  // Create a 16x16 grid of square divs using nested loop to create rows
+// Create a 16x16 grid of square divs using nested loop to create rows
+
+function createGrid(numSquares) {
   for (let i = 0; i < 16; i++) {
     const row = document.createElement('div');
     row.classList.add('row');
@@ -14,4 +16,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     container.appendChild(row);
   }
-});
+}
