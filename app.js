@@ -16,8 +16,14 @@ const calculateNumSquares = (size) => size * size;
 const createSquare = () => {
   const square = document.createElement('div');
   // add an event listener to change the square color on hover
-  square.addEventListener('mouseover', () => {
-    square.style.backgroundColor = '#333333';
+  square.addEventListener('click', () => {
+    square.style.backgroundColor = colorPicker.value;
+  });
+
+  // add an event listener to erase the square color when right-clicked
+  square.addEventListener('contextmenu', (event) => {
+    event.preventDefault(); // prevent the context menu from showing up
+    square.style.backgroundColor = 'white';
   });
   // Append the square to the grid
   return square;
@@ -113,9 +119,22 @@ githubLink.appendChild(githubImg);
 
 // Buttons settings
 const eraseColorsBtn = document.getElementById('erase-colors-btn');
+const colorPicker = document.getElementById('color-picker');
 
 // add event listeners to the buttons
-eraseColorsBtn.addEventListener('click', () => {
+colorPicker.addEventListener('input', setBrushColor);
+eraseColorsBtn.addEventListener('click', eraseColors);
+
+// Define the eraseColors function
+function eraseColors() {
   const squares = document.querySelectorAll('.grid > div');
-  squares.forEach((square) => (square.style.backgroundColor = ''));
-});
+  squares.forEach((square) => (square.style.backgroundColor = 'white'));
+}
+
+// Define the setBrushColor function
+function setBrushColor() {
+  // update the color of the brush
+  brushColor = colorPicker.value;
+}
+
+let brushColor = colorPicker.value; // set initial brush color to the default color picker value
