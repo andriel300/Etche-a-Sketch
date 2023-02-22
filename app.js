@@ -25,6 +25,14 @@ const createSquare = () => {
     event.preventDefault(); // prevent the context menu from showing up
     square.style.backgroundColor = 'white';
   });
+
+  // add an event listener to change the square color on hover while left-clicked
+  square.addEventListener('mousemove', (event) => {
+    if (event.buttons === 1) {
+      // check if left mouse button is pressed
+      square.style.backgroundColor = colorPicker.value;
+    }
+  });
   // Append the square to the grid
   return square;
 };
