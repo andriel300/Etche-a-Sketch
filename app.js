@@ -15,23 +15,25 @@ const calculateNumSquares = (size) => size * size;
 // Create a new square element
 const createSquare = () => {
   const square = document.createElement('div');
-  // add an event listener to change the square color on hover
-  square.addEventListener('click', () => {
-    square.style.backgroundColor = colorPicker.value;
-  });
-
-  // add an event listener to erase the square color when right-clicked
-  square.addEventListener('contextmenu', (event) => {
-    event.preventDefault(); // prevent the context menu from showing up
-    square.style.backgroundColor = 'white';
-  });
-
-  // add an event listener to change the square color on hover while left-clicked
+  // add an event listener to change the square color on left-clicked
   square.addEventListener('mousemove', (event) => {
     if (event.buttons === 1) {
       // check if left mouse button is pressed
       square.style.backgroundColor = colorPicker.value;
+    } else if (event.buttons === 2) {
+      // check if right mouse button is pressed
+      square.style.backgroundColor = 'white';
+      // add an event listener to clean the square color while right-clicked pressed
+      square.addEventListener('mousemove', (event) => {
+        if (event.buttons === 2) {
+          square.style.backgroundColor = 'white';
+        }
+      });
     }
+  });
+  // Prevent context menu from showing up on right-click
+  square.addEventListener('contextmenu', (event) => {
+    event.preventDefault();
   });
   // Append the square to the grid
   return square;
