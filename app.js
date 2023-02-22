@@ -9,11 +9,11 @@ const clearGrid = () => {
   grid.innerHTML = '';
 };
 
+// Calculate the number of squares per row and colum
+const calculateNumSquares = (size) => size * size;
+
 // Create div rows, columns.
 const createGrid = () => {
-  // Calculate the number of squares per row and colum
-  const numSquares = size * size;
-
   // Set the grid styles to a grid layout
   grid.style.display = 'grid';
   grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
