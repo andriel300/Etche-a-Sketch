@@ -14,28 +14,36 @@ const calculateNumSquares = (size) => size * size;
 
 // Create a new square element
 const createSquare = () => {
+  // Create a new square element
   const square = document.createElement('div');
-  // add an event listener to change the square color on left-clicked
-  square.addEventListener('mousemove', (event) => {
-    if (event.buttons === 1) {
-      // check if left mouse button is pressed
-      square.style.backgroundColor = colorPicker.value;
-    } else if (event.buttons === 2) {
-      // check if right mouse button is pressed
-      square.style.backgroundColor = 'white';
-      // add an event listener to clean the square color while right-clicked pressed
-      square.addEventListener('mousemove', (event) => {
-        if (event.buttons === 2) {
-          square.style.backgroundColor = 'white';
-        }
-      });
-    }
-  });
+
+  // Add event listener to change the square color on left-clicked
+  square.addEventListener('mousemove', handleMouseMove);
+
   // Prevent context menu from showing up on right-click
   square.addEventListener('contextmenu', (event) => {
     event.preventDefault();
   });
-  // Append the square to the grid
+
+  // Function to handle mouse move events on the square
+  function handleMouseMove(event) {
+    if (event.buttons === 1) {
+      square.style.backgroundColor = colorPicker.value;
+    } else if (event.buttons === 2) {
+      square.style.backgroundColor = 'white';
+      square.addEventListener('mousemove', handleRightClick);
+    }
+  }
+
+  // Function to handle right click events on the square
+  function handleRightClick(event) {
+    if (event.buttons === 2) {
+      square.style.backgroundColor = 'white';
+    } else {
+      square.removeEventListener('mousemove', handleRightClick);
+    }
+  }
+
   return square;
 };
 
