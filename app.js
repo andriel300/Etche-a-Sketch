@@ -1,11 +1,16 @@
 // Select the grid element
 const grid = document.querySelector('.grid');
 
-// Create div rows, columns.
-const createGrid = (size = 16) => {
-  // Remove and clear all existing squares from the grid
-  grid.innerHTML = '';
+// initialize the size of the grid
+let size = 16;
 
+// Remove and clear all existing squares from the grid
+const clearGrid = () => {
+  grid.innerHTML = '';
+};
+
+// Create div rows, columns.
+const createGrid = () => {
   // Calculate the number of squares per row and colum
   const numSquares = size * size;
 
