@@ -68,3 +68,26 @@ slider.addEventListener('input', (e) => {
 
 // Call the function to create the initial grid
 createGrid(size);
+
+// Only customizing styles using DOM Manipulations skill below.
+// Select the header and footer elements
+const header = document.querySelector('header');
+const footer = document.querySelector('footer');
+
+// Create the header content
+const headerContent = document.createElement('h1');
+headerContent.textContent = 'Etch a Sketch';
+
+// Create the footer content
+const footerContent = document.createElement('p');
+footerContent.textContent = 'Copyright © ' + new Date().getFullYear() + ' andriel300.';
+
+// Create a link to the github user
+const githubLink = document.createElement('a');
+githubLink.href = 'https://github.com/andriel300';
+githubLink.textContent = 'https://github.com/andriel300';
+
+// Add the header and footer content to the DOM
+header.appendChild(headerContent);
+footer.appendChild(footerContent);
+footer.appendChild(githubLink);
