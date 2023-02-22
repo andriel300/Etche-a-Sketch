@@ -3,8 +3,16 @@ const grid = document.querySelector('.grid');
 
 // Create div rows, columns.
 const createGrid = (size = 16) => {
+  // Remove and clear all existing squares from the grid
+  grid.innerHTML = '';
+
   // Calculate the number of squares per row and colum
   const numSquares = size * size;
+
+  // Set the grid styles to a grid layout
+  grid.style.display = 'grid';
+  grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+  grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
   // Loop through and create a new square for each
   for (let i = 0; i < numSquares; i++) {
@@ -17,11 +25,6 @@ const createGrid = (size = 16) => {
     grid.appendChild(square);
   }
 
-  // Set the grid styles to a grid layout
-  grid.style.display = 'grid';
-  grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-  grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
-
   // Initialize the slider
   const slider = document.getElementById('myRange');
   const output = document.getElementById('outputValue');
@@ -33,10 +36,7 @@ const createGrid = (size = 16) => {
     output.innerHTML = newSize;
 
     // Set the size of the squares between 1px and 64px
-    const squareSize = Math.min(64, Math.max(1, Math.floor(640 / newSize))) + 'px';
-
-    // Remove and clear all existing squares from the grid
-    grid.innerHTML = '';
+    const squareSize = Math.min(64, Math.max(1, Math.floor(400 / newSize))) + 'px';
 
     // Set the new grid styles with the updated size and square size
     grid.style.gridTemplateColumns = `repeat(${newSize}, ${squareSize})`;
