@@ -17,7 +17,7 @@ const createSquare = () => {
   const square = document.createElement('div');
   // add an event listener to change the square color on hover
   square.addEventListener('mouseover', () => {
-    square.style.backgroundColor = 'black';
+    square.style.backgroundColor = '#333333';
   });
   // Append the square to the grid
   return square;
@@ -110,3 +110,12 @@ header.appendChild(headerContent);
 footer.appendChild(footerContent);
 footer.appendChild(githubLink);
 githubLink.appendChild(githubImg);
+
+// Buttons settings
+const eraseColorsBtn = document.getElementById('erase-colors-btn');
+
+// add event listeners to the buttons
+eraseColorsBtn.addEventListener('click', () => {
+  const squares = document.querySelectorAll('.grid > div');
+  squares.forEach((square) => (square.style.backgroundColor = ''));
+});
