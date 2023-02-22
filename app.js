@@ -80,14 +80,33 @@ headerContent.textContent = 'Etch a Sketch';
 
 // Create the footer content
 const footerContent = document.createElement('p');
-footerContent.textContent = 'Copyright © ' + new Date().getFullYear() + ' andriel300.';
+footerContent.textContent = 'Copyright © ' + new Date().getFullYear() + ' Andriel José.';
 
 // Create a link to the github user
 const githubLink = document.createElement('a');
 githubLink.href = 'https://github.com/andriel300';
-githubLink.textContent = 'https://github.com/andriel300';
+githubLink.style.display = 'flex';
+githubLink.style.justifyContent = 'center';
+githubLink.style.alignItems = 'center';
+
+const githubImg = document.createElement('img');
+githubImg.src = '/github-character.png';
+githubImg.alt = 'Github Logo';
+githubImg.style.width = '32px';
+githubImg.style.height = '32px';
+githubImg.style.display = 'block';
+
+// Add the hover effect to the github image
+githubImg.addEventListener('mouseover', () => {
+  githubImg.style.opacity = 0.5;
+});
+
+githubImg.addEventListener('mouseout', () => {
+  githubImg.style.opacity = 1;
+});
 
 // Add the header and footer content to the DOM
 header.appendChild(headerContent);
 footer.appendChild(footerContent);
 footer.appendChild(githubLink);
+githubLink.appendChild(githubImg);
