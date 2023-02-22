@@ -12,23 +12,23 @@ const clearGrid = () => {
 // Calculate the number of squares per row and colum
 const calculateNumSquares = (size) => size * size;
 
+// Create a new square element
+const createSquare = () => {
+  const square = document.createElement('div');
+  // add an event listener to change the square color on hover
+  square.addEventListener('mouseover', () => {
+    square.style.backgroundColor = 'black';
+  });
+  // Append the square to the grid
+  return square;
+};
+
 // Create div rows, columns.
 const createGrid = () => {
   // Set the grid styles to a grid layout
   grid.style.display = 'grid';
   grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
   grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
-
-  // Loop through and create a new square for each
-  for (let i = 0; i < numSquares; i++) {
-    const square = document.createElement('div');
-    // add an event listener to change the square color on hover
-    square.addEventListener('mouseover', () => {
-      square.style.backgroundColor = 'black';
-    });
-    // Append the square to the grid
-    grid.appendChild(square);
-  }
 
   // Initialize the slider
   const slider = document.getElementById('myRange');
