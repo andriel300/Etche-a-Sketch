@@ -31,10 +31,10 @@ const createSquare = () => {
   // Function to handle mouse move events on the square
   function handleMouseMove(event) {
     if (event.buttons === 1) {
-      if (rainbowPickerBtn.classList.contains('active')) {
+      if (buttons.rainbowPickerBtn.classList.contains('active')) {
         square.style.backgroundColor = getRandomRainbowColor();
       } else {
-        square.style.backgroundColor = colorPicker.value;
+        square.style.backgroundColor = buttons.colorPicker.value;
       }
     } else if (event.buttons === 2) {
       square.style.backgroundColor = 'white';
@@ -142,36 +142,42 @@ footer.appendChild(githubLink);
 githubLink.appendChild(githubImg);
 
 // Buttons settings
-const eraseColorsBtn = document.getElementById('erase-colors-btn');
-const colorPicker = document.getElementById('color-picker');
-const rainbowPickerBtn = document.getElementById('rgb-picker-btn');
+const buttons = {
+  eraseColors: document.getElementById('erase-colors-btn'),
+  colorPicker: document.getElementById('color-picker'),
+  rainbowPickerBtn: document.getElementById('rgb-picker-btn'),
+  colorPickerBtn: document.getElementById('color-picker-btn'),
+};
+
 const squares = document.querySelectorAll('.grid > div');
 
+let isDrawing = false;
 let isRainbowPickerActive = false;
+let brushColor = buttons.colorPicker.value;
 
-// add event listeners to the buttons
-colorPicker.addEventListener('input', setBrushColor);
-eraseColorsBtn.addEventListener('click', eraseColors);
-rainbowPickerBtn.addEventListener('click', rainbowPicker);
+// Set initial brush color to the default color picker value
+buttons.colorPicker.addEventListener('input', () => {
+  brushColor = buttons.colorPicker.value;
+});
 
 // Define the eraseColors function
 function eraseColors() {
-  squares.forEach((square) => (square.style.backgroundColor = 'white'));
+  squares.forEach((square) => {
+    square.style.backgroundColor = '';
+  });
 }
 
 // Define the setBrushColor function
 function setBrushColor() {
-  // update the color of the brush
-  brushColor = colorPicker.value;
+  brushColor = buttons.colorPicker.value;
 }
 
-let brushColor = colorPicker.value; // set initial brush color to the default color picker value
-
-// define the rainbowPicker function
+// Define the rainbowPicker function
 function rainbowPicker() {
-  if (!rainbowPickerBtn.classList.contains('active')) {
-    rainbowPickerBtn.classList.add('active');
-    colorPicker.classList.remove('active');
+  if (!isRainbowPickerActive) {
+    isRainbowPickerActive = true;
+    buttons.rainbowPickerBtn.classList.add('active');
+    buttons.colorPicker.classList.remove('active');
     squares.forEach((square) => {
       square.addEventListener('mousedown', () => {
         isDrawing = true;
@@ -186,7 +192,8 @@ function rainbowPicker() {
       });
     });
   } else {
-    rainbowPickerBtn.classList.remove('active');
+    isRainbowPickerActive = false;
+    buttons.rainbowPickerBtn.classList.remove('active');
     squares.forEach((square) => {
       square.removeEventListener('mousedown', () => {
         isDrawing = true;
@@ -202,19 +209,28 @@ function rainbowPicker() {
     });
   }
 }
-colorPicker.addEventListener('click', () => {
-  if (!colorPicker.classList.contains('active')) {
-    colorPicker.classList.add('active');
-    rainbowPickerBtn.classList.remove('active');
-  }
-});
 
-// function to generate random rainbow color
-const getRandomRainbowColor = () => {
+// Add event listeners to the buttons
+buttons.eraseColors.addEventListener('click', eraseColors);
+buttons.colorPicker.addEventListener('click', () => {
+  buttons.colorPicker.classList.add('active');
+  buttons.rainbowPickerBtn.classList.remove('active');
+});
+buttons.rainbowPickerBtn.addEventListener('click', rainbowPicker);
+buttons.colorPickerBtn.addEventListener('click', selectColorPicker);
+// define the selectColorPicker function
+function selectColorPicker() {
+  buttons.colorPickerBtn.classList.add('active');
+  buttons.rainbowPickerBtn.classList.remove('active');
+  buttons.colorPicker.click();
+}
+
+// Function to generate random rainbow color
+function getRandomRainbowColor() {
   const letters = '0123456789ABCDEF';
   let color = '#';
   for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
-};
+}
