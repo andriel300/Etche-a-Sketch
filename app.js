@@ -145,6 +145,9 @@ githubLink.appendChild(githubImg);
 const eraseColorsBtn = document.getElementById('erase-colors-btn');
 const colorPicker = document.getElementById('color-picker');
 const rainbowPickerBtn = document.getElementById('rgb-picker-btn');
+const squares = document.querySelectorAll('.grid > div');
+
+let isRainbowPickerActive = false;
 
 // add event listeners to the buttons
 colorPicker.addEventListener('input', setBrushColor);
@@ -153,7 +156,6 @@ rainbowPickerBtn.addEventListener('click', rainbowPicker);
 
 // Define the eraseColors function
 function eraseColors() {
-  const squares = document.querySelectorAll('.grid > div');
   squares.forEach((square) => (square.style.backgroundColor = 'white'));
 }
 
@@ -167,33 +169,45 @@ let brushColor = colorPicker.value; // set initial brush color to the default co
 
 // define the rainbowPicker function
 function rainbowPicker() {
-  let isDrawing = false;
-  const squares = document.querySelectorAll('.grid > div');
-  squares.forEach((square) => {
-    square.addEventListener('mousedown', () => {
-      isDrawing = true;
+  if (!rainbowPickerBtn.classList.contains('active')) {
+    rainbowPickerBtn.classList.add('active');
+    colorPicker.classList.remove('active');
+    squares.forEach((square) => {
+      square.addEventListener('mousedown', () => {
+        isDrawing = true;
+      });
+      square.addEventListener('mouseup', () => {
+        isDrawing = false;
+      });
+      square.addEventListener('mouseenter', () => {
+        if (isDrawing) {
+          square.style.backgroundColor = getRandomRainbowColor();
+        }
+      });
     });
-    square.addEventListener('mouseup', () => {
-      isDrawing = false;
+  } else {
+    rainbowPickerBtn.classList.remove('active');
+    squares.forEach((square) => {
+      square.removeEventListener('mousedown', () => {
+        isDrawing = true;
+      });
+      square.removeEventListener('mouseup', () => {
+        isDrawing = false;
+      });
+      square.removeEventListener('mouseenter', () => {
+        if (isDrawing) {
+          square.style.backgroundColor = getRandomRainbowColor();
+        }
+      });
     });
-    square.addEventListener('mouseenter', () => {
-      if (isDrawing && rainbowPickerBtn.classList.contains('active')) {
-        square.style.backgroundColor = getRandomRainbowColor();
-      }
-    });
-  });
-  rainbowPickerBtn.classList.add('active');
-  colorPicker.disabled = true;
+  }
 }
-
-// function clearPicker() {
-//   rainbowPickerBtn.classList.remove('active');
-//   colorPicker.disabled = false;
-// }
-
-// colorPicker.addEventListener('input', () => {
-//   clearPicker(); // deactivate rainbowPickerBtn
-// });
+colorPicker.addEventListener('click', () => {
+  if (!colorPicker.classList.contains('active')) {
+    colorPicker.classList.add('active');
+    rainbowPickerBtn.classList.remove('active');
+  }
+});
 
 // function to generate random rainbow color
 const getRandomRainbowColor = () => {
