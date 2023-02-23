@@ -1,4 +1,3 @@
-// Select the grid element
 const grid = document.querySelector('.grid');
 
 // initialize the size of the grid
@@ -14,7 +13,6 @@ const calculateNumSquares = (size) => size * size;
 
 // Create a new square element
 const createSquare = () => {
-  // Create a new square element
   const square = document.createElement('div');
 
   // Add event listener to change the square color on left-clicked
@@ -93,7 +91,6 @@ slider.addEventListener('input', (e) => {
 // Call the function to create the initial grid
 createGrid(size);
 
-// Only customizing styles using DOM Manipulations skill below.
 // Select the header and footer elements
 const header = document.querySelector('header');
 const footer = document.querySelector('footer');
@@ -129,7 +126,7 @@ githubImg.addEventListener('mouseout', () => {
   githubImg.style.opacity = 1;
 });
 
-// Add the header and footer content to the DOM
+// append the header and footer content to the DOM
 header.appendChild(headerContent);
 footer.appendChild(footerContent);
 footer.appendChild(githubLink);
