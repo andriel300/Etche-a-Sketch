@@ -142,7 +142,6 @@ const buttons = {
   colorPicker: document.getElementById('color-picker'),
   rainbowPickerBtn: document.getElementById('rgb-picker-btn'),
   colorPickerBtn: document.getElementById('color-picker-btn'),
-  erasePickerBtn: document.getElementById('erase-picker-btn'),
 };
 const squares = document.querySelectorAll('.grid > div');
 
@@ -159,25 +158,21 @@ let isDrawing = false;
 let isRainbowPickerActive = false;
 let brushColor = buttons.colorPicker.value;
 
+// define the selectColorPicker function
+function selectColorPicker() {
+  buttons.colorPickerBtn.classList.add('active');
+  buttons.rainbowPickerBtn.classList.remove('active');
+  buttons.colorPicker.click();
+}
+
 // Set initial brush color to the default color picker value
 buttons.colorPicker.addEventListener('input', () => {
   brushColor = buttons.colorPicker.value;
 });
 
-// define the Eraser
-const activateEraser = () => {
-  squares.forEach((square) => {
-    const bgColor = getComputedStyle(square).getPropertyValue('background-color');
-    if (bgColor !== 'white') {
-      square.style.backgroundColor = 'white';
-    }
-  });
-};
-
-buttons.erasePickerBtn.addEventListener('click', activateEraser);
-
 // Define the clearColors function
 function clearColors() {
+  const squares = document.querySelectorAll('.grid > div');
   squares.forEach((square) => {
     square.style.backgroundColor = '';
   });
@@ -224,13 +219,6 @@ function rainbowPicker() {
       });
     });
   }
-}
-
-// define the selectColorPicker function
-function selectColorPicker() {
-  buttons.colorPickerBtn.classList.add('active');
-  buttons.rainbowPickerBtn.classList.remove('active');
-  buttons.colorPicker.click();
 }
 
 // Function to generate random rainbow color
