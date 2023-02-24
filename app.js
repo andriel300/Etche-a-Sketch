@@ -143,7 +143,7 @@ githubLink.appendChild(githubImg);
 
 // Buttons settings
 const buttons = {
-  eraseColors: document.getElementById('erase-colors-btn'),
+  clearColors: document.getElementById('clear-colors-btn'),
   colorPicker: document.getElementById('color-picker'),
   rainbowPickerBtn: document.getElementById('rgb-picker-btn'),
   colorPickerBtn: document.getElementById('color-picker-btn'),
@@ -160,8 +160,8 @@ buttons.colorPicker.addEventListener('input', () => {
   brushColor = buttons.colorPicker.value;
 });
 
-// Define the eraseColors function
-function eraseColors() {
+// Define the clearColors function
+function clearColors() {
   squares.forEach((square) => {
     square.style.backgroundColor = '';
   });
@@ -211,7 +211,7 @@ function rainbowPicker() {
 }
 
 // Add event listeners to the buttons
-buttons.eraseColors.addEventListener('click', eraseColors);
+buttons.clearColors.addEventListener('click', clearColors);
 buttons.colorPicker.addEventListener('click', () => {
   buttons.colorPicker.classList.add('active');
   buttons.rainbowPickerBtn.classList.remove('active');
