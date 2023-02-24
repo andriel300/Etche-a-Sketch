@@ -11,40 +11,51 @@ const clearGrid = () => {
 // Calculate the number of squares per row and colum
 const calculateNumSquares = (size) => size * size;
 
-// Create a new square element
-const createSquare = () => {
-  const square = document.createElement('div');
+let mousePosition = {
+  x: 0,
+  y: 0,
+};
 
-  // Add event listener to change the square color on left-clicked
-  square.addEventListener('mousemove', handleMouseMove);
+let isDrawing = false;
+
+// Create a new square element
+const paintSquare = () => {
+  const square = document.createElement('div');
 
   // Prevent context menu from showing up on right-click
   square.addEventListener('contextmenu', (event) => {
     event.preventDefault();
   });
 
-  // Function to handle mouse move events on the square
-  function handleMouseMove(event) {
-    if (event.buttons === 1) {
+  function onMouseDown() {
+    isDrawing = true;
+  }
+
+  function onMouseMove(event) {
+    // detect possible changes in mouse position
+    if (isDrawing && (mousePosition.x != event.clientX || mousePosition.y != event.clientY)) {
+      mousePosition.x = event.clientX;
+      mousePosition.y = event.clientY;
+      // code to draw goes here ....
       if (buttons.rainbowPickerBtn.classList.contains('active')) {
         square.style.backgroundColor = getRandomRainbowColor();
       } else {
         square.style.backgroundColor = buttons.colorPicker.value;
       }
-    } else if (event.buttons === 2) {
-      square.style.backgroundColor = 'white';
-      square.addEventListener('mousemove', handleRightClick);
     }
   }
 
-  // Function to handle right click events on the square
-  function handleRightClick(event) {
-    if (event.buttons === 2) {
-      square.style.backgroundColor = 'white';
-    } else {
-      square.removeEventListener('mousemove', handleRightClick);
-    }
+  function onMouseUp() {
+    isDrawing = false;
   }
+
+  square.addEventListener('mousedown', onMouseDown);
+  square.addEventListener('mousemove', onMouseMove);
+  square.addEventListener('mouseup', onMouseUp);
+
+  square.addEventListener('click', () => {
+    square.style.backgroundColor = buttons.colorPicker.value;
+  });
 
   return square;
 };
@@ -67,7 +78,7 @@ const createGrid = (size) => {
   setGridStyles(size);
   const numSquares = calculateNumSquares(size);
   for (let i = 0; i < numSquares; i++) {
-    const square = createSquare();
+    const square = paintSquare();
     addSquareToGrid(square);
   }
 };
@@ -154,7 +165,6 @@ buttons.colorPicker.addEventListener('click', () => {
 buttons.rainbowPickerBtn.addEventListener('click', rainbowPicker);
 buttons.colorPickerBtn.addEventListener('click', selectColorPicker);
 
-let isDrawing = false;
 let isRainbowPickerActive = false;
 let brushColor = buttons.colorPicker.value;
 
