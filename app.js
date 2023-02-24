@@ -11,19 +11,6 @@ const clearGrid = () => {
 // Calculate the number of squares per row and colum
 const calculateNumSquares = (size) => size * size;
 
-// Function to handle click events on the square
-function handleClick(event) {
-  if (event.buttons === 1) {
-    if (buttons.rainbowPickerBtn.classList.contains('active')) {
-      event.target.style.backgroundColor = getRandomRainbowColor();
-    } else {
-      event.target.style.backgroundColor = buttons.colorPicker.value;
-    }
-  } else if (event.buttons === 2) {
-    event.target.style.backgroundColor = 'white';
-  }
-}
-
 // Create a new square element
 const createSquare = () => {
   const square = document.createElement('div');
