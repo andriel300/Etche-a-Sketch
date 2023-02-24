@@ -18,7 +18,7 @@ const paintSquare = () => {
   const square = document.createElement('div');
 
   // Add event listener to change the square color on left-clicked
-  square.addEventListener('mousemove', handleMouseMove);
+  square.addEventListener('mousemove', changeSquareColorOnMouseMove);
 
   // Prevent context menu from showing up on right-click
   square.addEventListener('contextmenu', (event) => {
@@ -26,7 +26,7 @@ const paintSquare = () => {
   });
 
   // Function to handle mouse move events on the square
-  function handleMouseMove(event) {
+  function changeSquareColorOnMouseMove(event) {
     if (event.buttons === 1) {
       if (buttons.rainbowPickerBtn.classList.contains('active')) {
         square.style.backgroundColor = getRandomRainbowColor();
@@ -35,16 +35,16 @@ const paintSquare = () => {
       }
     } else if (event.buttons === 2) {
       square.style.backgroundColor = 'white';
-      square.addEventListener('mousemove', handleRightClick);
+      square.addEventListener('mousemove', handleRightEraseClick);
     }
   }
 
   // Function to handle right click events on the square
-  function handleRightClick(event) {
+  function handleRightEraseClick(event) {
     if (event.buttons === 2) {
       square.style.backgroundColor = 'white';
     } else {
-      square.removeEventListener('mousemove', handleRightClick);
+      square.removeEventListener('mousemove', handleRightEraseClick);
     }
   }
 
@@ -203,7 +203,7 @@ function rainbowPicker() {
       square.removeEventListener('mousedown', () => (isDrawing = true));
       square.removeEventListener('mouseup', () => (isDrawing = false));
       square.removeEventListener('mouseenter', () => {}); // Empty function to remove event listener for mouseenter event when rainbow picker is not active
-    } // This prevents the color from changing when the mouse enters the squares when rainbow picker is not active
+    }
   });
 }
 // Function to generate random rainbow color
