@@ -11,11 +11,6 @@ const clearGrid = () => {
 // Calculate the number of squares per row and colum
 const calculateNumSquares = (size) => size * size;
 
-let mousePosition = {
-  x: 0,
-  y: 0,
-};
-
 let isDrawing = false;
 
 // Create a new square element
@@ -191,48 +186,30 @@ function setBrushColor() {
 
 // Define the rainbowPicker function
 function rainbowPicker() {
-  if (!isRainbowPickerActive) {
-    isRainbowPickerActive = true;
-    buttons.rainbowPickerBtn.classList.add('active');
-    buttons.colorPicker.classList.remove('active');
-    squares.forEach((square) => {
-      square.addEventListener('mousedown', () => {
-        isDrawing = true;
-      });
-      square.addEventListener('mouseup', () => {
-        isDrawing = false;
-      });
+  isRainbowPickerActive = !isRainbowPickerActive;
+  buttons.rainbowPickerBtn.classList.toggle('active');
+  buttons.colorPicker.classList.toggle('active');
+
+  squares.forEach((square) => {
+    if (isRainbowPickerActive) {
+      square.addEventListener('mousedown', () => (isDrawing = true));
+      square.addEventListener('mouseup', () => (isDrawing = false));
       square.addEventListener('mouseenter', () => {
         if (isDrawing) {
           square.style.backgroundColor = getRandomRainbowColor();
         }
       });
-    });
-  } else {
-    isRainbowPickerActive = false;
-    buttons.rainbowPickerBtn.classList.remove('active');
-    squares.forEach((square) => {
-      square.removeEventListener('mousedown', () => {
-        isDrawing = true;
-      });
-      square.removeEventListener('mouseup', () => {
-        isDrawing = false;
-      });
-      square.removeEventListener('mouseenter', () => {
-        if (isDrawing) {
-          square.style.backgroundColor = getRandomRainbowColor();
-        }
-      });
-    });
-  }
+    } else {
+      square.removeEventListener('mousedown', () => (isDrawing = true));
+      square.removeEventListener('mouseup', () => (isDrawing = false));
+      square.removeEventListener('mouseenter', () => {}); // Empty function to remove event listener for mouseenter event when rainbow picker is not active
+    } // This prevents the color from changing when the mouse enters the squares when rainbow picker is not active
+  });
 }
-
 // Function to generate random rainbow color
 function getRandomRainbowColor() {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+  const randomR = Math.floor(Math.random() * 256);
+  const randomG = Math.floor(Math.random() * 256);
+  const randomB = Math.floor(Math.random() * 256);
+  return `rgb(${randomR}, ${randomG}, ${randomB})`;
 }
