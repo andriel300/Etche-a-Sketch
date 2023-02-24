@@ -208,8 +208,9 @@ function rainbowPicker() {
 }
 // Function to generate random rainbow color
 function getRandomRainbowColor() {
-  const randomR = Math.floor(Math.random() * 256);
-  const randomG = Math.floor(Math.random() * 256);
-  const randomB = Math.floor(Math.random() * 256);
-  return `rgb(${randomR}, ${randomG}, ${randomB})`;
+  const hue = Math.floor(Math.random() * 361); // Generate a random hue value between 0 and 360
+  const saturation = '100%';
+  const lightness = '50%';
+  const alpha = '50'; // Set the alpha value to 1
+  return `hsl(${hue}, ${saturation}, ${lightness}, ${alpha})`;
 }
