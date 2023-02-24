@@ -15,11 +15,6 @@ const calculateNumSquares = (size) => size * size;
 const createSquare = () => {
   const square = document.createElement('div');
 
-  // add an event listener to change the square color when clicked
-  square.addEventListener('click', () => {
-    square.style.backgroundColor = getRandomRainbowColor();
-  });
-
   // Add event listener to change the square color on left-clicked
   square.addEventListener('mousemove', handleMouseMove);
 
@@ -147,9 +142,18 @@ const buttons = {
   colorPicker: document.getElementById('color-picker'),
   rainbowPickerBtn: document.getElementById('rgb-picker-btn'),
   colorPickerBtn: document.getElementById('color-picker-btn'),
+  erasePickerBtn: document.getElementById('erase-picker-btn'),
 };
-
 const squares = document.querySelectorAll('.grid > div');
+
+// Add event listeners to the buttons
+buttons.clearColors.addEventListener('click', clearColors);
+buttons.colorPicker.addEventListener('click', () => {
+  buttons.colorPicker.classList.add('active');
+  buttons.rainbowPickerBtn.classList.remove('active');
+});
+buttons.rainbowPickerBtn.addEventListener('click', rainbowPicker);
+buttons.colorPickerBtn.addEventListener('click', selectColorPicker);
 
 let isDrawing = false;
 let isRainbowPickerActive = false;
@@ -159,6 +163,18 @@ let brushColor = buttons.colorPicker.value;
 buttons.colorPicker.addEventListener('input', () => {
   brushColor = buttons.colorPicker.value;
 });
+
+// define the Eraser
+const activateEraser = () => {
+  squares.forEach((square) => {
+    const bgColor = getComputedStyle(square).getPropertyValue('background-color');
+    if (bgColor !== 'white') {
+      square.style.backgroundColor = 'white';
+    }
+  });
+};
+
+buttons.erasePickerBtn.addEventListener('click', activateEraser);
 
 // Define the clearColors function
 function clearColors() {
@@ -210,14 +226,6 @@ function rainbowPicker() {
   }
 }
 
-// Add event listeners to the buttons
-buttons.clearColors.addEventListener('click', clearColors);
-buttons.colorPicker.addEventListener('click', () => {
-  buttons.colorPicker.classList.add('active');
-  buttons.rainbowPickerBtn.classList.remove('active');
-});
-buttons.rainbowPickerBtn.addEventListener('click', rainbowPicker);
-buttons.colorPickerBtn.addEventListener('click', selectColorPicker);
 // define the selectColorPicker function
 function selectColorPicker() {
   buttons.colorPickerBtn.classList.add('active');
