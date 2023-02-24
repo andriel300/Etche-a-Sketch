@@ -22,40 +22,36 @@ let isDrawing = false;
 const paintSquare = () => {
   const square = document.createElement('div');
 
+  // Add event listener to change the square color on left-clicked
+  square.addEventListener('mousemove', handleMouseMove);
+
   // Prevent context menu from showing up on right-click
   square.addEventListener('contextmenu', (event) => {
     event.preventDefault();
   });
 
-  function onMouseDown() {
-    isDrawing = true;
-  }
-
-  function onMouseMove(event) {
-    // detect possible changes in mouse position
-    if (isDrawing && (mousePosition.x != event.clientX || mousePosition.y != event.clientY)) {
-      mousePosition.x = event.clientX;
-      mousePosition.y = event.clientY;
-      // code to draw goes here ....
+  // Function to handle mouse move events on the square
+  function handleMouseMove(event) {
+    if (event.buttons === 1) {
       if (buttons.rainbowPickerBtn.classList.contains('active')) {
         square.style.backgroundColor = getRandomRainbowColor();
       } else {
         square.style.backgroundColor = buttons.colorPicker.value;
       }
+    } else if (event.buttons === 2) {
+      square.style.backgroundColor = 'white';
+      square.addEventListener('mousemove', handleRightClick);
     }
   }
 
-  function onMouseUp() {
-    isDrawing = false;
+  // Function to handle right click events on the square
+  function handleRightClick(event) {
+    if (event.buttons === 2) {
+      square.style.backgroundColor = 'white';
+    } else {
+      square.removeEventListener('mousemove', handleRightClick);
+    }
   }
-
-  square.addEventListener('mousedown', onMouseDown);
-  square.addEventListener('mousemove', onMouseMove);
-  square.addEventListener('mouseup', onMouseUp);
-
-  square.addEventListener('click', () => {
-    square.style.backgroundColor = buttons.colorPicker.value;
-  });
 
   return square;
 };
