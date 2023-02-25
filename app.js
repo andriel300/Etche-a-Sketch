@@ -1,3 +1,4 @@
+// Variables for DOM elements
 const grid = document.querySelector('.grid');
 const clearColorsBtn = document.getElementById('clear-colors-btn');
 const colorPicker = document.getElementById('color-picker');
@@ -22,23 +23,14 @@ const clearGrid = () => {
   grid.innerHTML = '';
 };
 
-// Calculate the number of squares per row and colum
-const calculateNumSquares = (size) => size * size;
-
 let isDrawing = false;
-
 // Create a new square element
 const paintSquare = () => {
   const square = document.createElement('div');
-
   // Add event listener to change the square color on left-clicked
   square.addEventListener('mousemove', changeSquareColorOnMouseMove);
-
   // Prevent context menu from showing up on right-click
-  square.addEventListener('contextmenu', (event) => {
-    event.preventDefault();
-  });
-
+  square.addEventListener('contextmenu', (event) => event.preventDefault());
   // Function to handle mouse move events on the square
   function changeSquareColorOnMouseMove(event) {
     if (event.buttons === 1) {
@@ -81,7 +73,7 @@ const setGridStyles = (size) => {
 const createGrid = (size) => {
   clearGrid();
   setGridStyles(size);
-  const numSquares = calculateNumSquares(size);
+  const numSquares = size * size;
   for (let i = 0; i < numSquares; i++) {
     const square = paintSquare();
     addSquareToGrid(square);
@@ -92,7 +84,6 @@ const createGrid = (size) => {
 const slider = document.getElementById('myRange');
 const output = document.getElementById('outputValue');
 output.innerHTML = `${size} x ${size}`;
-
 // Handle the slider input event
 slider.addEventListener('input', (e) => {
   size = e.target.value;
@@ -118,7 +109,7 @@ let brushColor = colorPicker.value;
 function selectColorPicker() {
   colorPickerBtn.classList.add('active');
   rainbowPickerBtn.classList.remove('active');
-  colorPicker.click();
+  colorPicker.select();
 }
 
 // Set initial brush color to the default color picker value
