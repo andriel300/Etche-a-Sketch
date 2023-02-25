@@ -1,4 +1,18 @@
 const grid = document.querySelector('.grid');
+const clearColorsBtn = document.getElementById('clear-colors-btn');
+const colorPicker = document.getElementById('color-picker');
+const rainbowPickerBtn = document.getElementById('rgb-picker-btn');
+const colorPickerBtn = document.getElementById('color-picker-btn');
+const squares = document.querySelectorAll('.grid > div');
+
+// Add event listeners to the buttons
+clearColorsBtn.onclick = clearAllColors;
+colorPicker.onclick = function () {
+  colorPicker.classList.add('active');
+  rainbowPickerBtn.classList.remove('active');
+};
+rainbowPickerBtn.onclick = rainbowPicker;
+colorPickerBtn.onclick = selectColorPicker;
 
 // initialize the size of the grid
 let size = 16;
@@ -28,10 +42,10 @@ const paintSquare = () => {
   // Function to handle mouse move events on the square
   function changeSquareColorOnMouseMove(event) {
     if (event.buttons === 1) {
-      if (buttons.rainbowPickerBtn.classList.contains('active')) {
+      if (rainbowPickerBtn.classList.contains('active')) {
         square.style.backgroundColor = getRandomRainbowColor();
       } else {
-        square.style.backgroundColor = buttons.colorPicker.value;
+        square.style.backgroundColor = colorPicker.value;
       }
     } else if (event.buttons === 2) {
       square.style.backgroundColor = 'white';
@@ -77,12 +91,12 @@ const createGrid = (size) => {
 // Initialize the slider
 const slider = document.getElementById('myRange');
 const output = document.getElementById('outputValue');
-output.innerHTML = size;
+output.innerHTML = `${size} x ${size}`;
 
 // Handle the slider input event
 slider.addEventListener('input', (e) => {
   size = e.target.value;
-  output.innerHTML = size;
+  output.innerHTML = `${size} x ${size}`;
 
   // Set the size of the squares between 1px and 64px
   const squareSize = Math.min(64, Math.max(1, Math.floor(400 / size))) + 'px';
@@ -96,6 +110,60 @@ slider.addEventListener('input', (e) => {
 
 // Call the function to create the initial grid
 createGrid(size);
+
+let isRainbowPickerActive = false;
+let brushColor = colorPicker.value;
+
+// define the selectColorPicker function
+function selectColorPicker() {
+  colorPickerBtn.classList.add('active');
+  rainbowPickerBtn.classList.remove('active');
+  colorPicker.click();
+}
+
+// Set initial brush color to the default color picker value
+colorPicker.addEventListener('input', () => {
+  brushColor = colorPicker.value;
+});
+
+// Define the clearColors function
+function clearAllColors() {
+  const squares = document.querySelectorAll('.grid > div');
+  squares.forEach((square) => {
+    square.style.backgroundColor = '';
+  });
+}
+
+// Define the rainbowPicker function
+function rainbowPicker() {
+  isRainbowPickerActive = !isRainbowPickerActive;
+  rainbowPickerBtn.classList.toggle('active');
+  colorPicker.classList.toggle('active');
+
+  squares.forEach((square) => {
+    if (isRainbowPickerActive) {
+      square.addEventListener('mousedown', () => (isDrawing = true));
+      square.addEventListener('mouseup', () => (isDrawing = false));
+      square.addEventListener('mouseenter', () => {
+        if (isDrawing) {
+          square.style.backgroundColor = getRandomRainbowColor();
+        }
+      });
+    } else {
+      square.removeEventListener('mousedown', () => (isDrawing = true));
+      square.removeEventListener('mouseup', () => (isDrawing = false));
+      square.removeEventListener('mouseenter', () => {}); // Empty function to remove event listener for mouseenter event when rainbow picker is not active
+    }
+  });
+}
+// Function to generate random rainbow color
+function getRandomRainbowColor() {
+  const hue = Math.floor(Math.random() * 361); // Generate a random hue value between 0 and 360
+  const saturation = '80%';
+  const lightness = '60%';
+  const alpha = '1'; // Set the alpha value to 1
+  return `hsl(${hue}, ${saturation}, ${lightness}, ${alpha})`;
+}
 
 // Select the header and footer elements
 const header = document.querySelector('header');
@@ -137,80 +205,3 @@ header.appendChild(headerContent);
 footer.appendChild(footerContent);
 footer.appendChild(githubLink);
 githubLink.appendChild(githubImg);
-
-// Buttons settings
-const buttons = {
-  clearColors: document.getElementById('clear-colors-btn'),
-  colorPicker: document.getElementById('color-picker'),
-  rainbowPickerBtn: document.getElementById('rgb-picker-btn'),
-  colorPickerBtn: document.getElementById('color-picker-btn'),
-};
-const squares = document.querySelectorAll('.grid > div');
-
-// Add event listeners to the buttons
-buttons.clearColors.addEventListener('click', clearColors);
-buttons.colorPicker.addEventListener('click', () => {
-  buttons.colorPicker.classList.add('active');
-  buttons.rainbowPickerBtn.classList.remove('active');
-});
-buttons.rainbowPickerBtn.addEventListener('click', rainbowPicker);
-buttons.colorPickerBtn.addEventListener('click', selectColorPicker);
-
-let isRainbowPickerActive = false;
-let brushColor = buttons.colorPicker.value;
-
-// define the selectColorPicker function
-function selectColorPicker() {
-  buttons.colorPickerBtn.classList.add('active');
-  buttons.rainbowPickerBtn.classList.remove('active');
-  buttons.colorPicker.click();
-}
-
-// Set initial brush color to the default color picker value
-buttons.colorPicker.addEventListener('input', () => {
-  brushColor = buttons.colorPicker.value;
-});
-
-// Define the clearColors function
-function clearColors() {
-  const squares = document.querySelectorAll('.grid > div');
-  squares.forEach((square) => {
-    square.style.backgroundColor = '';
-  });
-}
-
-// Define the setBrushColor function
-function setBrushColor() {
-  brushColor = buttons.colorPicker.value;
-}
-
-// Define the rainbowPicker function
-function rainbowPicker() {
-  isRainbowPickerActive = !isRainbowPickerActive;
-  buttons.rainbowPickerBtn.classList.toggle('active');
-  buttons.colorPicker.classList.toggle('active');
-
-  squares.forEach((square) => {
-    if (isRainbowPickerActive) {
-      square.addEventListener('mousedown', () => (isDrawing = true));
-      square.addEventListener('mouseup', () => (isDrawing = false));
-      square.addEventListener('mouseenter', () => {
-        if (isDrawing) {
-          square.style.backgroundColor = getRandomRainbowColor();
-        }
-      });
-    } else {
-      square.removeEventListener('mousedown', () => (isDrawing = true));
-      square.removeEventListener('mouseup', () => (isDrawing = false));
-      square.removeEventListener('mouseenter', () => {}); // Empty function to remove event listener for mouseenter event when rainbow picker is not active
-    }
-  });
-}
-// Function to generate random rainbow color
-function getRandomRainbowColor() {
-  const hue = Math.floor(Math.random() * 361); // Generate a random hue value between 0 and 360
-  const saturation = '100%';
-  const lightness = '50%';
-  const alpha = '50'; // Set the alpha value to 1
-  return `hsl(${hue}, ${saturation}, ${lightness}, ${alpha})`;
-}
