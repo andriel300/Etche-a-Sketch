@@ -1,5 +1,19 @@
-# Etche-a-Sketch
+# Etche-a-Sketch Project
 
-The code is an implementation of an Etch-a-Sketch game where a user can draw on a grid of squares using the mouse. The grid size is adjustable using a slider, and the squares change color based on the user's interaction with the mouse. The user can select a color using a color picker or enable a rainbow mode where the colors change randomly. There is also an eraser button to clear the grid.
+This is a browser-based Etch-a-Sketch project where the user can draw on a grid with a color picker or a rainbow pen. The project is implemented using JavaScript and DOM manipulation techniques.
 
-The code uses event listeners to detect mouse events such as clicks and mouse movement on the grid squares. When a user interacts with a square, the square's color changes based on the user's input. The rainbow mode generates a random color each time the user clicks on a square.
+## Difficulty
+
+The project was of moderate to higher difficulty. It required knowledge of JavaScript event listeners and DOM manipulation. The key challenge was to handle mouse movements to paint on the grid, especially when using the rainbow pen, which required listening to mouse events such as `mousedown`, `mouseup`, and `mouseenter`.
+
+## Lessons learned about Event Listener and DOM Manipulation Skills
+
+I learned the following skills while working on this project:
+
+- Using `querySelector` and `getElementById` to get DOM elements.
+- Adding event listeners to DOM elements using `addEventListener`.
+- Using template literals and ternary operator to set the size of the grid.
+- Using `createElement` to create new DOM elements.
+- Changing CSS styles of DOM elements using style.
+- Listening to mouse events such as `mousedown`, `mouseup`, and `mouseenter`.
+- Removing event listeners using `removeEventListener`.
