@@ -17,3 +17,7 @@ I learned the following skills while working on this project:
 - Changing CSS styles of DOM elements using style.
 - Listening to mouse events such as `mousedown`, `mouseup`, and `mouseenter`.
 - Removing event listeners using `removeEventListener`.
+
+## Conclusion
+
+In conclusion, this project was a good exercise to improve my JavaScript event listeners and DOM manipulation skills. The project helped me to understand how to manipulate the DOM and handle user events to create an interactive browser-based application.
