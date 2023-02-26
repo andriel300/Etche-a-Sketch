@@ -147,9 +147,13 @@ select {
   -webkit-appearance: none; /* Override default look */
   width: 20px; /* Set a specific slider handle width */
   height: 20px; /* Slider handle height */
-  border-radius: 50%;
-  background: #3b82f6; /* Green background */
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(90, 92, 106, 1) 0%,
+    rgba(32, 45, 58, 1) 81.3%
+  );
   cursor: pointer; /* Cursor on hover */
+  transform: skew(-21deg);
 }
 
 /* Footer */
