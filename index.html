@@ -11,24 +11,43 @@
     <div class="sticky-footer">
       <header class="sticky-footer__header">
         <!-- Header content goes here -->
+        <h1>Etch-a-Sketch</h1>
       </header>
+
+      <div class="sidebar">
+        <main class="sticky-footer__main">
+          <!-- buttons left side -->
+          <aside class="sidebar__buttons">
+            <input type="color" id="color-picker" value="#333333" />
+            <button id="color-pen-btn">Color Pen<span></span></button>
+            <button id="rgb-pen-btn">Rainbow Pen<span></span></button>
+            <button id="shader-pen-btn">Shader Pen<span></span></button>
+            <button id="clear-colors-btn">Clear all <span></span></button>
+            <div class="slider-container">
+              <input type="range" min="1" max="64" value="16" class="slider" id="myRange" />
+              <p>Pixels: <span id="outputValue"></span></p>
+            </div>
+          </aside>
+          <div id="canvas" class="full">
+            <!--grid generates here-->
+          </div>
+        </main>
+      </div>
+
+      <footer class="sticky-footer__footer">
+        <p>
+          Copyright ©
+          <script>
+            document.write(new Date().getFullYear());
+          </script>
+          Andriel José
+        </p>
+        <a class="githubLink" href="https://github.com/andriel300">
+          <img class="githubImg" src="/github-character.png" alt="GitHub Logo" />
+        </a>
+        <!-- Footer content goes here -->
+      </footer>
     </div>
-    <main class="sticky-footer__main">
-      <div class="grid"></div>
-      <div class="slidecontainer">
-        <input type="range" min="1" max="64" value="16" class="slider" id="myRange" />
-        <p>Value Pixels: <span id="outputValue"></span></p>
-      </div>
-      <div class="buttons">
-        <input type="color" id="color-picker" value="#333333" />
-        <button id="color-picker-btn">Color Picker</button>
-        <button id="rgb-picker-btn">Rainbow</button>
-        <button id="clear-colors-btn">Clear all</button>
-      </div>
-    </main>
-    <footer class="sticky-footer__footer">
-      <!-- Footer content goes here -->
-    </footer>
     <script type="text/javascript" src="app.js"></script>
   </body>
 </html>
