@@ -94,6 +94,14 @@ select {
   background-color: white;
 }
 
+/* .cell {
+  width: calc(100% / 16);
+  height: calc(100% / 16);
+  border: 1px solid black;
+  box-sizing: border-box;
+  float: left;
+} */
+
 /* Github */
 .githubLink {
   display: flex;
